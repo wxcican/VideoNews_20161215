@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="F:\WangXC\VideoNews-Explain\VideoNews_20161215\vitamio\src\main\assets"/><source path="F:\WangXC\VideoNews-Explain\VideoNews_20161215\vitamio\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="F:\WangXC\VideoNews-Explain\VideoNews_20161215\vitamio\src\debug\assets"/></dataSet></merger>
