@@ -175,7 +175,7 @@ public class SimpleVideoPlayer extends FrameLayout{
             @Override
             public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
                 int layoutWidth = surfaceView.getWidth();
-                int layoutHeight = layoutWidth * (height / width);
+                int layoutHeight = layoutWidth * height / width;
                 //更新surfaceview的size
                 ViewGroup.LayoutParams params = surfaceView.getLayoutParams();
                 params.width = layoutWidth;
@@ -202,7 +202,7 @@ public class SimpleVideoPlayer extends FrameLayout{
 
     //开始播放
     private void startMediaPlayer(){
-        ivPreview.setVisibility(INVISIBLE);
+        ivPreview.setVisibility(View.INVISIBLE);
         btnToggle.setImageResource(R.drawable.ic_pause);
         mediaPlayer.start();
         isPlaying = true;
