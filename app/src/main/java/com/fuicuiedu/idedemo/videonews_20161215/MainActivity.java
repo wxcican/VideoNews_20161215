@@ -10,28 +10,20 @@ import com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer;
 
 public class MainActivity extends AppCompatActivity {
 
-    SimpleVideoPlayer simpleVideoPlayer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        simpleVideoPlayer = (SimpleVideoPlayer) findViewById(R.id.main_svp);
-        simpleVideoPlayer.setVideoPath(VideoUrlRes.getTestUrl1());
+        findViewById(R.id.main_part).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,TestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        simpleVideoPlayer.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        simpleVideoPlayer.onPause();
-    }
 }
 
 

@@ -27,6 +27,7 @@ public class VideoViewActivity extends AppCompatActivity {
     public static void open(Context context, String videoPath) {
         Intent intent = new Intent(context, VideoViewActivity.class);
         intent.putExtra(KEY_VIDEO_PATH, videoPath);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
     //-----启动当前的Activity-----

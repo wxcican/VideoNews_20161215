@@ -1,15 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.fuicuiedu.idedemo.videonews_20161215.MainActivity">
+    android:layout_height="match_parent">
 
-    <com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer
-        android:id="@+id/main_svp"
+    <Button
+        android:id="@+id/main_part"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="部分播放自定义视图"/>
+
+    <!--
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@android:color/black"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_name"
+            android:textSize="@dimen/font_18" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonBar"
+        android:layout_below="@+id/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnNews"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawableTop="@drawable/selector_ic_online_news"
+            android:padding="@dimen/lay_4"
+            android:text="@string/online_news"
+            android:textColor="@drawable/selector_color_accent"
+            android:textSize="@dimen/font_10" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/dividerVertical" />
+
+        <Button
+            android:id="@+id/btnLocal"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawableTop="@drawable/selector_ic_local_video"
+            android:padding="@dimen/lay_4"
+            android:text="@string/local_video"
+            android:textColor="@drawable/selector_color_accent"
+            android:textSize="@dimen/font_10" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/dividerVertical" />
+
+        <Button
+            android:id="@+id/btnLikes"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawableTop="@drawable/selector_ic_account"
+            android:padding="@dimen/lay_4"
+            android:text="@string/likes"
+            android:textColor="@drawable/selector_color_accent"
+            android:textSize="@dimen/font_10" />
+    </LinearLayout>
+    -->
 </RelativeLayout>

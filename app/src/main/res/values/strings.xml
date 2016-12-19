@@ -1,3 +1,42 @@
 <resources>
-    <string name="app_name">VideoNews_20161215</string>
+    <string name="app_name">视频新闻</string>
+
+    <string name="online_news">在线新闻</string>
+
+    <string name="local_video">本地视频</string>
+
+    <string name="likes">我的收藏</string>
+
+    <string name="error_network">网络故障，请检查你的网络连接</string>
+
+    <string name="comment">评论</string>
+
+    <string name="like">收藏</string>
+
+    <string name="tourist">游客</string>
+
+    <string name="register">注册</string>
+
+    <string name="login">登录</string>
+
+    <string name="username">用户名</string>
+
+    <string name="password">密码</string>
+
+    <string name="username_or_password_can_not_be_null">用户名或密码不能为空</string>
+
+    <string name="login_success">登录成功</string>
+
+    <string name="register_success">注册成功</string>
+
+    <string name="please_login_first">请先登录</string>
+
+    <string name="like_success">收藏成功</string>
+    <string name="like_failure">收藏失败</string>
+
+    <string name="logout">退出登录</string>
+
+    <string name="OK">确定</string>
+
+    <string name="please_edit_comment">请编辑评论</string>
 </resources>
