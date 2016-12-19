@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.fuicuiedu.idedemo.videonews_20161215.MainActivity">
 
+    <com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer
+        android:id="@+id/main_svp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@android:color/black"/>
 
-
-    <Button
-        android:id="@+id/main_full"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="全屏播放视图"/>
 </RelativeLayout>
