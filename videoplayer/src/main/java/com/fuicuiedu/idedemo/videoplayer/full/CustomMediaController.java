@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.fuicuiedu.idedemo.videoplayer.R;
@@ -108,11 +109,11 @@ public class CustomMediaController extends MediaController {
                 float percentage = (startY - endY) / height;//高度滑动的百分比
                 //左侧：调整亮度(在屏幕左侧的1/5)
                 if (startX < width /5){
-//                    adjustBrightness();//调整亮度的方法
+                    adjustBrightness(percentage);//调整亮度的方法
                 }
                 //右侧：调整音量(在屏幕右侧的1/5)
                 else if (startX > width * 4/5){
-//                    adjustVolume();//调整音量的方法
+                    adjustVolume(percentage);//调整音量的方法
                 }
                 return super.onScroll(e1, e2, distanceX, distanceY);
             }
@@ -137,4 +138,31 @@ public class CustomMediaController extends MediaController {
             }
         });
     }
+
+    //调整音量的方法
+    private void adjustVolume(float percentage){
+        //最终音量 = 最大音量 * 改变的百分比 + 当前音量
+        int volume = (int) ((maxVolume * percentage) + currentVolume);
+        //如果最终音量大于最大音量，结果为最大音量
+        volume = volume > maxVolume ? maxVolume : volume;
+        //如果最终音量小于0，结果为0
+        volume = volume < 0 ? 0 : volume;
+        //设置音量
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,volume,AudioManager.FLAG_SHOW_UI);
+    }
+
+    //调整亮度的方法（最小亮度 = 0 ，最大亮度 = 1.0f）
+    private void adjustBrightness(float percentage){
+        //最终亮度 = percentage + 当前亮度
+        float brightness = percentage + currentBrightness;
+        //大于最大亮度
+        brightness = brightness > 1.0f ? 1.0f : brightness;
+        //小于最小亮度
+        brightness = brightness < 0 ? 0 : brightness;
+        //设置亮度
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.screenBrightness = brightness;
+        window.setAttributes(layoutParams);
+    }
+
 }

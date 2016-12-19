@@ -79,8 +79,7 @@ public class VideoViewActivity extends AppCompatActivity {
     private void initVideoView(){
         Vitamio.isInitialized(this);
         videoView = (VideoView) findViewById(R.id.videoView);
-        // TODO: 2016/12/19 0019  先用自带的MediaController，稍后自定义
-        videoView.setMediaController(new MediaController(this));
+        videoView.setMediaController(new CustomMediaController(this));
         videoView.setKeepScreenOn(true);//设置屏幕常亮
         videoView.requestFocus();//拿到焦点
         //缓冲第一步，设置缓冲大小
