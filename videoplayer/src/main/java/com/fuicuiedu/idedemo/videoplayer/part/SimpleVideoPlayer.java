@@ -65,11 +65,25 @@ public class SimpleVideoPlayer extends FrameLayout{
         init();
     }
 
+    //用handler更新播放进度条
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (isPlaying){
+                //每0.2秒更新一次播放进度
+                int progress = (int) (mediaPlayer.getCurrentPosition() * PROGRESS_MAX / mediaPlayer.getDuration());
+                progressBar.setProgress(progress);
+                //发送一个空的延迟消息，不停调用本身，执行内部方法，实现自动更新进度条
+                handler.sendEmptyMessageDelayed(0,200);
+            }
+        }
+    };
+
     //######################      基本项目结构   start       #################
 
     //做视图相关的初始化
     private void init(){
-        Log.e("aaa","init执行了");
         //Vitamio初始化
         Vitamio.isInitialized(getContext());
         //填充布局
@@ -113,7 +127,6 @@ public class SimpleVideoPlayer extends FrameLayout{
 
     //初始化视频播放控制视图
     private void initControllerViews(){
-        Log.e("aaa","initControllerViews执行了");
         //预览图
         ivPreview = (ImageView) findViewById(R.id.ivPreview);
         //播放，暂停
@@ -185,21 +198,6 @@ public class SimpleVideoPlayer extends FrameLayout{
         });
     }
 
-    //准备MediaPlayer
-    private void prepareMediaPlayer(){
-        try {
-            //重置mediaplayer
-            mediaPlayer.reset();
-            mediaPlayer.setDataSource(videoPath);
-            //设置循环播放
-            mediaPlayer.setLooping(true);
-            mediaPlayer.prepareAsync();
-            ivPreview.setVisibility(View.VISIBLE);
-        } catch (IOException e) {
-            Log.e("SimpleVideoPlayer","prepare MediaPlater" + e.getMessage());
-        }
-    }
-
     //开始播放
     private void startMediaPlayer(){
         ivPreview.setVisibility(View.INVISIBLE);
@@ -220,20 +218,20 @@ public class SimpleVideoPlayer extends FrameLayout{
         handler.removeMessages(0);
     }
 
-    //用handler更新播放进度条
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (isPlaying){
-                //每0.2秒更新一次播放进度
-                int progress = (int) (mediaPlayer.getCurrentPosition() * PROGRESS_MAX / mediaPlayer.getDuration());
-                progressBar.setProgress(progress);
-                //发送一个空的延迟消息，不停调用本身，执行内部方法，实现自动更新进度条
-                handler.sendEmptyMessageDelayed(0,200);
-            }
+    //准备MediaPlayer
+    private void prepareMediaPlayer(){
+        try {
+            //重置mediaplayer
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(videoPath);
+            //设置循环播放
+            mediaPlayer.setLooping(true);
+            mediaPlayer.prepareAsync();
+            ivPreview.setVisibility(View.VISIBLE);
+        } catch (IOException e) {
+            Log.e("SimpleVideoPlayer","prepare MediaPlater" + e.getMessage());
         }
-    };
+    }
 
     //：释放mediaplayer
     private void releaseMediaPlayer(){
