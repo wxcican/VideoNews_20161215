@@ -132,7 +132,7 @@ public class CustomMediaController extends MediaController {
                 }
                 //交给gestureDetector去做
                 gestureDetector.onTouchEvent(event);
-                //在调整过程中，一直显示
+                //在调整过程中，CustomMediaController一直显示
                 show();
                 return true;
             }
