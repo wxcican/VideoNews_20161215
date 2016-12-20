@@ -8,6 +8,8 @@ package com.fuicuiedu.idedemo.videoplayer.list;
 
 import android.content.Context;
 import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,14 +131,29 @@ public class MediaPlayerManager {
     }
 
     //stopPlayer，停止播放,并且更新UI（通过接口callBack）
-    public void stopPlayer(){}
+    public void stopPlayer(){
+        //判断有没有视频存在
+        if (videoId == null) return;
+        //通知UI更新
+        for (OnPlaybackListener listener : onPlaybackListeners){
+            listener.onStopPlay(videoId);
+        }
+        this.videoId = null;
+        if (mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+        }
+        mediaPlayer.reset();
+    }
 
     //添加播放处理的监听（UI层的callback）
-    public void addPlayerBackListener(){}
+    public void addPlayerBackListener(OnPlaybackListener listener){
+        onPlaybackListeners.add(listener);
+    }
 
     //移除监听
-    public void removeAllListeners(){}
-
+    public void removeAllListeners(){
+        onPlaybackListeners.clear();
+    }
 
     //调整更改视频尺寸
     private void changeVideoSize(int width,int height){
@@ -166,10 +183,6 @@ public class MediaPlayerManager {
         }
     }
 
-
-
-
-
     // 视图接口
     // 在视频播放模块完成播放处理, 视图层来实现此接口, 完成视图层UI更新
     public interface OnPlaybackListener {
@@ -184,26 +197,4 @@ public class MediaPlayerManager {
 
         void onSizeMeasured(String videoId, int width, int height);// 大小更改
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
