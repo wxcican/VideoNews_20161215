@@ -7,7 +7,9 @@ package com.fuicuiedu.idedemo.videoplayer.list;
 //addPlayerBackListener和removeAllListeners:添加和移除监听（与视图交互的接口）
 
 import android.content.Context;
+import android.view.Surface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +91,7 @@ public class MediaPlayerManager {
         });
     }
 
-    //onPause,释放MediaPlater
+    //onPause,释放MediaPlayer
     public void onPause(){
         stopPlayer();
         if (needRelease){
@@ -98,8 +100,33 @@ public class MediaPlayerManager {
         mediaPlayer = null;
     }
 
+    private long startTime;//用于避免用户频繁操作开关视频
+
     //startPlayer，开始播放，并且更新UI（通过接口callBack）
-    public void startPlayer(){}
+    public void startPlayer(Surface surface,String path,String videoId){
+        //避免过于频繁的操作开关
+        if (System.currentTimeMillis() - startTime < 300) return;
+        startTime = System.currentTimeMillis();
+        //当前有其他视频存在
+        if (this.videoId != null){
+            stopPlayer();
+        }
+        //更新当前videoID
+        this.videoId = videoId;
+        //通知UI更新
+        for (OnPlaybackListener listener : onPlaybackListeners){
+            listener.onStartPlay(videoId);
+        }
+        //准备播放
+        try {
+            mediaPlayer.setDataSource(path);
+            needRelease = true;
+            mediaPlayer.setSurface(surface);
+            mediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //stopPlayer，停止播放,并且更新UI（通过接口callBack）
     public void stopPlayer(){}
