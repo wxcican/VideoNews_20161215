@@ -32,4 +32,8 @@ dependencies {
     compile project(':videoplayer')
     //TextInputEditText
     compile 'com.android.support:design:24.2.1'
+    //OkHttp
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    //日志拦截器
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 }
