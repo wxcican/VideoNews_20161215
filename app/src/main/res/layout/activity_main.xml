@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/main_part"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="部分播放自定义视图"/>
-
-    <!--
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -87,5 +80,4 @@
             android:textColor="@drawable/selector_color_accent"
             android:textSize="@dimen/font_10" />
     </LinearLayout>
-    -->
 </RelativeLayout>
