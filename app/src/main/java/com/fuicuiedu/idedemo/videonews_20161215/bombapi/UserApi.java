@@ -23,7 +23,8 @@ public interface UserApi {
     @POST("1/users")
     Call<UserResult> register(@Body UserEntity userEntity);
 
+    //用户登录
     @GET("1/login")
-    Call login(@Query("username") String username, @Query("password") String password);
+    Call<UserResult> login(@Query("username") String username, @Query("password") String password);
 
 }

@@ -10,16 +10,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
+import com.fuicuiedu.idedemo.videonews_20161215.UserManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.fuicuiedu.idedemo.videonews_20161215.R.string.username;
+
 /**
  * Created by Administrator on 2016/12/21 0021.
  */
 
-public class LikesFragment extends Fragment implements RegisterFragment.OnRegisterSuccessListener{
+public class LikesFragment extends Fragment implements RegisterFragment.OnRegisterSuccessListener,LoginFragment.OnLoginSuccessListener{
 
     @BindView(R.id.tvUsername)
     TextView mTvUsername;
@@ -35,6 +38,7 @@ public class LikesFragment extends Fragment implements RegisterFragment.OnRegist
     private View view;
 
     private RegisterFragment mRegisterFragment;
+    private LoginFragment mLoginFragment;
 
     @Nullable
     @Override
@@ -42,7 +46,11 @@ public class LikesFragment extends Fragment implements RegisterFragment.OnRegist
         if (view == null){
             view = inflater.inflate(R.layout.fragment_likes,container,false);
             ButterKnife.bind(this,view);
-            // TODO: 2016/12/21 0021 判断用户登录状态，更新UI
+            //判断用户登录状态，更新UI
+            UserManager userManager = UserManager.getInstance();
+            if (!userManager.isOffline()){
+                userOnLine(userManager.getUsername(),userManager.getObjectId());
+            }
         }
         return view;
     }
@@ -61,10 +69,16 @@ public class LikesFragment extends Fragment implements RegisterFragment.OnRegist
                 break;
             //登录
             case R.id.btnLogin:
+                if (mLoginFragment == null){
+                    mLoginFragment = new LoginFragment();
+                    mLoginFragment.setListener(this);
+                }
+                mLoginFragment.show(getChildFragmentManager(),"Login Dialog");
                 break;
             //退出登录
             case R.id.btnLogout:
                 //用户下线
+                userOffline();
                 break;
         }
     }
@@ -78,6 +92,14 @@ public class LikesFragment extends Fragment implements RegisterFragment.OnRegist
         userOnLine(username,objectId);
     }
 
+    //登录成功
+    @Override
+    public void loginSuccess(String username, String objectId) {
+        mLoginFragment.dismiss();
+        //用户上线
+        userOnLine(username,objectId);
+    }
+
     //用户上线
     private void userOnLine(String username,String objectId){
         //更新UI
@@ -86,7 +108,24 @@ public class LikesFragment extends Fragment implements RegisterFragment.OnRegist
         mBtnLogout.setVisibility(View.VISIBLE);
         mDivider.setVisibility(View.INVISIBLE);
         mTvUsername.setText(username);
-        // TODO: 2016/12/22 0022 存储用户信息
+        // 存储用户信息
+        UserManager.getInstance().setUsername(username);
+        UserManager.getInstance().setObjectId(objectId);
         // TODO: 2016/12/22 0022 刷新收藏列表
     }
+
+    //用户下线
+    private void userOffline(){
+        //清除用户相关信息
+        UserManager.getInstance().clear();
+        //更新UI
+        mBtnLogin.setVisibility(View.VISIBLE);
+        mBtnRegister.setVisibility(View.VISIBLE);
+        mBtnLogout.setVisibility(View.INVISIBLE);
+        mDivider.setVisibility(View.VISIBLE);
+        mTvUsername.setText(R.string.tourist);
+        // TODO: 2016/12/22 0022 清空收藏列表 
+    }
+
+
 }
