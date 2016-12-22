@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.BombClient;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.UserApi;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.ToastUtils;
 
 import java.io.IOException;
@@ -21,9 +22,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import retrofit2.Call;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
@@ -65,18 +64,8 @@ public class RegisterFragment extends DialogFragment{
         mBtnRegister.setVisibility(View.GONE);
 
         // TODO: 2016/12/21 0021 网络模块，注册请求
-        Call call = BombClient.getInstance().register(username,password);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-            }
-        });
+        UserApi userApi = BombClient.getInstance().getUserApi();
+        Call call = userApi.register();
     }
 
     //当注册成功会触发的方法
