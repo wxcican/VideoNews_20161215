@@ -19,10 +19,10 @@ import butterknife.OnClick;
  * Created by Administrator on 2016/12/21 0021.
  */
 
-public class LikesFragment extends Fragment{
+public class LikesFragment extends Fragment implements RegisterFragment.OnRegisterSuccessListener{
 
     @BindView(R.id.tvUsername)
-    TextView mTbUsername;
+    TextView mTvUsername;
     @BindView(R.id.btnRegister)
     Button mBtnRegister;
     @BindView(R.id.btnLogin)
@@ -54,7 +54,8 @@ public class LikesFragment extends Fragment{
             case R.id.btnRegister:
                 if (mRegisterFragment == null){
                     mRegisterFragment = new RegisterFragment();
-                    // TODO: 2016/12/21 0021 添加注册成功的监听
+                    //添加注册成功的监听
+                    mRegisterFragment.setListener(this);
                 }
                 mRegisterFragment.show(getChildFragmentManager(),"Register Dialog");
                 break;
@@ -66,5 +67,26 @@ public class LikesFragment extends Fragment{
                 //用户下线
                 break;
         }
+    }
+
+    //添加注册成功的监听
+    @Override
+    public void registerSuccess(String username, String objectId) {
+        //关闭注册的对话框
+        mRegisterFragment.dismiss();
+        //用户上线
+        userOnLine(username,objectId);
+    }
+
+    //用户上线
+    private void userOnLine(String username,String objectId){
+        //更新UI
+        mBtnLogin.setVisibility(View.INVISIBLE);
+        mBtnRegister.setVisibility(View.INVISIBLE);
+        mBtnLogout.setVisibility(View.VISIBLE);
+        mDivider.setVisibility(View.INVISIBLE);
+        mTvUsername.setText(username);
+        // TODO: 2016/12/22 0022 存储用户信息
+        // TODO: 2016/12/22 0022 刷新收藏列表
     }
 }

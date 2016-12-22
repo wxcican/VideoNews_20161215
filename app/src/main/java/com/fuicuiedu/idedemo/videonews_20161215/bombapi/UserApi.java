@@ -9,6 +9,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -20,7 +21,7 @@ public interface UserApi {
 
     //用户注册
     @POST("1/users")
-    Call<ResponseBody> register(@Body UserEntity userEntity);
+    Call<UserResult> register(@Body UserEntity userEntity);
 
     @GET("1/login")
     Call login(@Query("username") String username, @Query("password") String password);

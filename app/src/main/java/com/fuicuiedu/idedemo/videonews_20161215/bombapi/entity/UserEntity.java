@@ -1,7 +1,7 @@
 package com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity;
 
 /**
- * Created by Administrator on 2016/12/22 0022.
+ *  用户的实体类（注册时的请求体）
  */
 
 public class UserEntity {
