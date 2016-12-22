@@ -15,14 +15,22 @@ import android.widget.Toast;
 import com.fuicuiedu.idedemo.videonews_20161215.R;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.BombClient;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.UserApi;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.UserEntity;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
@@ -65,7 +73,21 @@ public class RegisterFragment extends DialogFragment{
 
         // TODO: 2016/12/21 0021 网络模块，注册请求
         UserApi userApi = BombClient.getInstance().getUserApi();
-        Call call = userApi.register();
+
+        UserEntity userEntity = new UserEntity(username,password);
+
+        Call<ResponseBody> call = userApi.register(userEntity);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     //当注册成功会触发的方法

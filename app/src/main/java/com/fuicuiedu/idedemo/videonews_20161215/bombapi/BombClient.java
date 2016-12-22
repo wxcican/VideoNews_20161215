@@ -9,6 +9,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -46,7 +47,10 @@ public class BombClient {
         //构建Retrofit
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
+                //bomb服务器的BaseUrl
                 .baseUrl("https://api.bmob.cn/")
+                //添加Gson转换器
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
     }
