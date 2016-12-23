@@ -39,4 +39,6 @@ dependencies {
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //mugen
+    compile 'com.vinaysshenoy:mugen:1.0.2'
 }

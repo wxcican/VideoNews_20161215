@@ -62,24 +62,4 @@ public class BombClient {
         }
         return userApi;
     }
-
-    //注册请求
-    public Call register(String username, String password){
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("username",username);
-            jsonObject.put("password",password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        RequestBody requestBody = RequestBody.create(null,jsonObject.toString());
-
-        Request request = new Request.Builder()
-                .url("https://api.bmob.cn/1/users")
-                .post(requestBody)
-                .build();
-
-        return okHttpClient.newCall(request);
-    }
 }
