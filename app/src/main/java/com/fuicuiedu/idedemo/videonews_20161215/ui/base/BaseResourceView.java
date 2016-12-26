@@ -12,17 +12,27 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.BombClient;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.NewsApi;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.NewsEntity;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.result.QueryResult;
+import com.fuicuiedu.idedemo.videonews_20161215.commons.ToastUtils;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.media.CamcorderProfile.get;
 import static android.os.Build.VERSION_CODES.M;
+import static android.renderscript.Sampler.Value.WRAP;
 
 /**
  * 带下拉刷新及分页加载功能的自定义视图
@@ -41,13 +51,13 @@ import static android.os.Build.VERSION_CODES.M;
  * <p>
  */
 
-public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model>> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener, MugenCallbacks{
+public abstract class BaseResourceView<Model, ItemView extends BaseItemView<Model>> extends FrameLayout implements SwipeRefreshLayout.OnRefreshListener, MugenCallbacks {
     public BaseResourceView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public BaseResourceView(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public BaseResourceView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -55,9 +65,12 @@ public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model
         initView();
     }
 
-    @BindView(R.id.recyclerView)RecyclerView recyclerView;
-    @BindView(R.id.refreshLayout)SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.progressBar)ProgressBar progressBar;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     //跳过多少条数据
     private int skip = 0;
@@ -66,10 +79,13 @@ public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model
     //数据适配器
     protected ModelAdapter adapter;
 
+    protected NewsApi newsApi;
+
     //初始化视图
     private void initView() {
-        // TODO: 2016/12/23 0023 NewsApi未初始化
-        LayoutInflater.from(getContext()).inflate(R.layout.partial_pager_resource,this,true);
+        //NewsApi初始化
+        newsApi = BombClient.getInstance().getNewsApi();
+        LayoutInflater.from(getContext()).inflate(R.layout.partial_pager_resource, this, true);
         ButterKnife.bind(this);
         //初始化RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -79,19 +95,66 @@ public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
         //配置上拉加载
-        Mugen.with(recyclerView,this).start();
+        Mugen.with(recyclerView, this).start();
     }
 
     //下拉刷新时来触发的方法
     @Override
     public void onRefresh() {
-        // TODO: 2016/12/23 0023 loadall改变
+        //获取数据（抽象）
+        Call<QueryResult<Model>> call = queryData(getLimit(), 0);
+        //返回null，说明查询条件不满足
+        if (call == null) {
+            refreshLayout.setRefreshing(false);//下拉刷新停止
+            return;
+        }
+        call.enqueue(new Callback<QueryResult<Model>>() {
+            @Override
+            public void onResponse(Call<QueryResult<Model>> call, Response<QueryResult<Model>> response) {
+                refreshLayout.setRefreshing(false);//下拉刷新停止
+                List<Model> datas = response.body().getResults();
+                skip = datas.size();
+                loadAll = datas.size() < getLimit();
+                //将数据添加到adapter
+                adapter.clear();
+                adapter.addData((ArrayList<Model>) datas);
+            }
+
+            @Override
+            public void onFailure(Call<QueryResult<Model>> call, Throwable t) {
+                refreshLayout.setRefreshing(false);//下拉刷新停止
+                ToastUtils.showShort("onFailure:" + t.getMessage());
+            }
+        });
     }
 
     //--------------------------上拉加载时会触发的方法---------------------
     @Override
     public void onLoadMore() {
-        // TODO: 2016/12/23 0023 loadall改变
+        Call<QueryResult<Model>> call = queryData(getLimit(), skip);
+        //返回null，说明查询条件不满足
+        if (call == null) {
+            ToastUtils.showShort("查询条件异常");
+            return;
+        }
+        progressBar.setVisibility(View.VISIBLE);//显示上拉视图
+        call.enqueue(new Callback<QueryResult<Model>>() {
+            @Override
+            public void onResponse(Call<QueryResult<Model>> call, Response<QueryResult<Model>> response) {
+                progressBar.setVisibility(View.GONE);//隐藏上拉视图
+                List<Model> datas = response.body().getResults();
+                skip += datas.size();
+                loadAll = datas.size() < getLimit();
+                //将数据添加到adapter
+                adapter.addData((ArrayList<Model>) datas);
+            }
+
+            @Override
+            public void onFailure(Call<QueryResult<Model>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);//隐藏上拉视图
+                ToastUtils.showShort("onFailure:" + t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -105,8 +168,8 @@ public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model
     }
     //--------------------------上拉加载时会触发的方法---------------------
 
-    // TODO: 2016/12/23 0023  从服务器查询数据
-    protected abstract Call queryData(int limit, int skip);
+    //从服务器查询数据(就是构建一个请求)
+    protected abstract Call<QueryResult<Model>> queryData(int limit, int skip);
 
     //每页从服务器获取多少条数据
     protected abstract int getLimit();
@@ -115,15 +178,15 @@ public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model
     protected abstract ItemView createItemView();
 
     //RecyclerView的数据适配器
-    protected class ModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    protected class ModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private ArrayList<Model> dataSet = new ArrayList<>();
 
-        public void clear(){
+        public void clear() {
             dataSet.clear();
             notifyDataSetChanged();
         }
 
-        public void addData(ArrayList<Model> data){
+        public void addData(ArrayList<Model> data) {
             dataSet.addAll(data);
             notifyDataSetChanged();
         }
@@ -131,6 +194,10 @@ public abstract class BaseResourceView<Model,ItemView extends BaseItemView<Model
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ItemView itemView = createItemView();
+            itemView.setLayoutParams(new RecyclerView.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
             return new RecyclerView.ViewHolder(itemView) {
             };
         }
