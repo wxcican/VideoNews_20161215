@@ -23,14 +23,14 @@
             android:textSize="@dimen/font_18" />
     </android.support.v7.widget.Toolbar>
 
-    <!--<com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer-->
-        <!--android:id="@+id/simpleVideoPlayer"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/size_300"-->
-        <!--android:background="@color/black" />-->
+    <com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer
+        android:id="@+id/simpleVideoPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_300"
+        android:background="@color/black" />
 
-    <!--<com.fuicuiedu.idedemo.videonews.ui.news.comments.CommentsListView-->
-        <!--android:id="@+id/commentsListView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
+    <com.fuicuiedu.idedemo.videonews_20161215.ui.news.comments.CommentsListView
+        android:id="@+id/commentsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

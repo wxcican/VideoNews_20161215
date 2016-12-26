@@ -13,16 +13,18 @@ import android.widget.TextView;
 import com.fuicuiedu.idedemo.videonews_20161215.R;
 import com.fuicuiedu.idedemo.videonews_20161215.UserManager;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.NewsEntity;
+import com.fuicuiedu.idedemo.videonews_20161215.commons.CommonUtils;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.ToastUtils;
+import com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CommentsActivity extends AppCompatActivity {
+public class    CommentsActivity extends AppCompatActivity {
 
-    private static final String KEY_NEWS = "KEY_NEWS";
+        private static final String KEY_NEWS = "KEY_NEWS";
 
-    //对外公开一个跳转进来的方法
+        //对外公开一个跳转进来的方法
     public static void open(Context context, NewsEntity newsEntity){
         Intent intent = new Intent(context,CommentsActivity.class);
         intent.putExtra(KEY_NEWS,newsEntity);
@@ -33,7 +35,8 @@ public class CommentsActivity extends AppCompatActivity {
 
     @BindView(R.id.tvTitle)TextView tvTitle;
     @BindView(R.id.toolbar)Toolbar toolbar;
-
+    @BindView(R.id.simpleVideoPlayer)SimpleVideoPlayer simpleVideoPlayer;
+    @BindView(R.id.commentsListView)CommentsListView commentsListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,29 @@ public class CommentsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //设置标题
         tvTitle.setText(newsEntity.getNewsTitle());
+        //初始化simpleVideoPlayer，设置数据源
+        String videoPath = CommonUtils.encodeUrl(newsEntity.getVideoUrl());
+        simpleVideoPlayer.setVideoPath(videoPath);
+        //初始化commentsListView，设置newsid
+        commentsListView.setNewsId(newsEntity.getObjectId());
+        commentsListView.autoRefresh();
     }
+
+    // #######################   视频相关  start  #####################
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        simpleVideoPlayer.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        simpleVideoPlayer.onPause();
+    }
+
+    // #######################   视频相关  end  #####################
 
     // #######################   toolbar相关   #####################
     //创建一个菜单栏
