@@ -210,7 +210,7 @@ public abstract class BaseResourceView<Model, ItemView extends BaseItemView<Mode
             ItemView itemView = (ItemView) holder.itemView;
             //将当前项的数据设置到当前项的视图上
             itemView.bindModel(model);
-        }
+    }
 
         @Override
         public int getItemCount() {

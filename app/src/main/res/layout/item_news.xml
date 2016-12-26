@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 在线新闻列表中的单项布局-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/lay_20"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_300"
+        android:background="@color/black">
+
+        <TextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_300"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/ivPreview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_300"
+            android:background="@color/black"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tvNewsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:padding="@dimen/lay_8"
+            android:textSize="@dimen/font_16"
+            android:textColor="@color/white"
+            tools:text="News Title"/>
+
+        <ImageView
+            android:id="@+id/ivPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_play_circle_outline_big"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_list"
+        android:gravity="center_vertical|end"
+        android:padding="@dimen/lay_8"
+        android:drawablePadding="@dimen/lay_8"
+        android:textColor="@color/grey"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        tools:text="Created At"/>
+
+</LinearLayout>

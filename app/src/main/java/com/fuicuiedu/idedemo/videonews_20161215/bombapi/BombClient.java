@@ -1,5 +1,8 @@
 package com.fuicuiedu.idedemo.videonews_20161215.bombapi;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,15 +48,18 @@ public class BombClient {
                 .addInterceptor(httpLoggingInterceptor)//添加日志拦截器
                 .build();
 
+        //让Gson能够将Bomb返回的时间戳自动转换为Date对象
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
         //构建Retrofit
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 //bomb服务器的BaseUrl
                 .baseUrl("https://api.bmob.cn/")
                 //添加Gson转换器
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-
     }
 
     //拿到UserApi
