@@ -7,6 +7,7 @@ package com.fuicuiedu.idedemo.videoplayer.list;
 //addPlayerBackListener和removeAllListeners:添加和移除监听（与视图交互的接口）
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -117,7 +118,10 @@ public class MediaPlayerManager {
         this.videoId = videoId;
         //通知UI更新
         for (OnPlaybackListener listener : onPlaybackListeners){
-            listener.onStartPlay(videoId);
+            if (listener == null){
+                Log.e("aaa","listener为空！");
+            }
+//            listener.onStartPlay(videoId);
         }
         //准备播放
         try {

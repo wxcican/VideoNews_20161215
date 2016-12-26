@@ -98,6 +98,12 @@ public abstract class BaseResourceView<Model, ItemView extends BaseItemView<Mode
         Mugen.with(recyclerView, this).start();
     }
 
+    //自动刷新
+    public void autoRefresh(){
+        refreshLayout.setRefreshing(true);
+        onRefresh();
+    }
+
     //下拉刷新时来触发的方法
     @Override
     public void onRefresh() {

@@ -3,11 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="新闻列表（待实现）"
-        android:textColor="@color/black"
-        android:textSize="30dp" />
+    <com.fuicuiedu.idedemo.videonews_20161215.ui.news.NewsListView
+        android:id="@+id/newsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </RelativeLayout>

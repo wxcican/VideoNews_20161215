@@ -2,10 +2,9 @@ package com.fuicuiedu.idedemo.videonews_20161215.ui.news;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,8 +21,6 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * 新闻列表的单项视图，将使用MediaPlayer播放视频，TextureView来显示视频
@@ -90,6 +87,9 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
         if (surface == null) return;
         String path = newsEntity.getVideoUrl();
         String videoId = newsEntity.getObjectId();
+        if (mediaPlayerManager == null){
+            Log.e("aaa","为空！");
+        }
         mediaPlayerManager.startPlayer(surface, path, videoId);
     }
 
@@ -125,13 +125,13 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
 
         @Override
         public void onStartPlay(String videoId) {
-            if (isCurrentVideo(videoId)) {
-                tvNewsTitle.setVisibility(View.INVISIBLE);
-                ivPreview.setVisibility(View.INVISIBLE);
-                ivPlay.setVisibility(View.INVISIBLE);
-                // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+                if (isCurrentVideo(videoId)) {
+                    tvNewsTitle.setVisibility(View.INVISIBLE);
+                    ivPreview.setVisibility(View.INVISIBLE);
+                    ivPlay.setVisibility(View.INVISIBLE);
+                    // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
         }
 
         @Override
@@ -155,16 +155,20 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
 
     //textureView -> surface相关监听
     //拿到Surface
+    //当TextureView SurfaceTexture准备使用。
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         this.surface = new Surface(surface);
     }
 
+    //当SurfaceTexture的缓冲区大小改变。
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
     }
 
     //当surface销毁时，停止播放
+    //当指定的SurfaceTexture即将被摧毁。
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         this.surface.release();
@@ -176,6 +180,7 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
         return false;
     }
 
+    //当指定SurfaceTexture通过updateTexImage()更新。
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
     }
