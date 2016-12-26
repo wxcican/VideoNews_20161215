@@ -25,7 +25,7 @@ import butterknife.OnClick;
 /**
  * 新闻列表的单项视图，将使用MediaPlayer播放视频，TextureView来显示视频
  */
-public class NewsItemView extends BaseItemView<NewsEntity> implements TextureView.SurfaceTextureListener {
+public class NewsItemView extends BaseItemView<NewsEntity> implements TextureView.SurfaceTextureListener, MediaPlayerManager.OnPlaybackListener {
 
     @BindView(R.id.textureView)
     TextureView textureView; // 用来展现视频的TextureView
@@ -54,7 +54,7 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
         ButterKnife.bind(this);
         //添加列表视频播放控制相关监听
         mediaPlayerManager = MediaPlayerManager.getsInstance(getContext());
-        mediaPlayerManager.addPlayerBackListener(onPlaybackListener);
+        mediaPlayerManager.addPlayerBackListener(this);
         //textureView -> surface相关监听
         textureView.setSurfaceTextureListener(this);
     }
@@ -87,9 +87,7 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
         if (surface == null) return;
         String path = newsEntity.getVideoUrl();
         String videoId = newsEntity.getObjectId();
-        if (mediaPlayerManager == null){
-            Log.e("aaa","为空！");
-        }
+        Log.e("aaa", "点击了预览图");
         mediaPlayerManager.startPlayer(surface, path, videoId);
     }
 
@@ -105,53 +103,52 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
         return videoId.equals(newsEntity.getObjectId());
     }
 
-    //添加列表视频播放控制相关监听
-    private MediaPlayerManager.OnPlaybackListener onPlaybackListener = new MediaPlayerManager.OnPlaybackListener() {
-        @Override
-        public void onStartBuffering(String videoId) {
-            if (isCurrentVideo(videoId)) {
-                //将当前视频的prb显示出来
-                progressBar.setVisibility(View.VISIBLE);
-            }
+    //    //添加列表视频播放控制相关监听
+    @Override
+    public void onStartBuffering(String videoId) {
+        if (isCurrentVideo(videoId)) {
+            //将当前视频的prb显示出来
+            progressBar.setVisibility(View.VISIBLE);
         }
+    }
 
-        @Override
-        public void onStopBuffering(String videoId) {
-            if (isCurrentVideo(videoId)) {
-                //将当前视频的prb隐藏
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+    @Override
+    public void onStopBuffering(String videoId) {
+        if (isCurrentVideo(videoId)) {
+            //将当前视频的prb隐藏
+            progressBar.setVisibility(View.INVISIBLE);
         }
+    }
 
-        @Override
-        public void onStartPlay(String videoId) {
-                if (isCurrentVideo(videoId)) {
-                    tvNewsTitle.setVisibility(View.INVISIBLE);
-                    ivPreview.setVisibility(View.INVISIBLE);
-                    ivPlay.setVisibility(View.INVISIBLE);
-                    // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
+    @Override
+    public void onStartPlay(String videoId) {
+        Log.e("aaa", "onStartPlay");
+        if (isCurrentVideo(videoId)) {
+            tvNewsTitle.setVisibility(View.INVISIBLE);
+            ivPreview.setVisibility(View.INVISIBLE);
+            ivPlay.setVisibility(View.INVISIBLE);
+            // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
+            progressBar.setVisibility(View.INVISIBLE);
         }
+    }
 
-        @Override
-        public void onStopPlay(String videoId) {
-            if (isCurrentVideo(videoId)) {
-                tvNewsTitle.setVisibility(View.VISIBLE);
-                ivPreview.setVisibility(View.VISIBLE);
-                ivPlay.setVisibility(View.VISIBLE);
-                // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+    @Override
+    public void onStopPlay(String videoId) {
+        if (isCurrentVideo(videoId)) {
+            tvNewsTitle.setVisibility(View.VISIBLE);
+            ivPreview.setVisibility(View.VISIBLE);
+            ivPlay.setVisibility(View.VISIBLE);
+            // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
+            progressBar.setVisibility(View.INVISIBLE);
         }
+    }
 
-        @Override
-        public void onSizeMeasured(String videoId, int width, int height) {
-            if (isCurrentVideo(videoId)) {
-                //无需求，不做处理
-            }
+    @Override
+    public void onSizeMeasured(String videoId, int width, int height) {
+        if (isCurrentVideo(videoId)) {
+            //无需求，不做处理
         }
-    };
+    }
 
     //textureView -> surface相关监听
     //拿到Surface

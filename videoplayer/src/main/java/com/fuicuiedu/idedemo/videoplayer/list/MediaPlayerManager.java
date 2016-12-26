@@ -118,10 +118,7 @@ public class MediaPlayerManager {
         this.videoId = videoId;
         //通知UI更新
         for (OnPlaybackListener listener : onPlaybackListeners){
-            if (listener == null){
-                Log.e("aaa","listener为空！");
-            }
-//            listener.onStartPlay(videoId);
+            listener.onStartPlay(videoId);
         }
         //准备播放
         try {
