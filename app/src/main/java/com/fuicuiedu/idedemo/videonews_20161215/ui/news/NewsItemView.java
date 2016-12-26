@@ -1,6 +1,7 @@
 package com.fuicuiedu.idedemo.videonews_20161215.ui.news;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.fuicuiedu.idedemo.videonews_20161215.R;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.NewsEntity;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.CommonUtils;
 import com.fuicuiedu.idedemo.videonews_20161215.ui.base.BaseItemView;
+import com.fuicuiedu.idedemo.videonews_20161215.ui.news.comments.CommentsActivity;
 import com.fuicuiedu.idedemo.videoplayer.list.MediaPlayerManager;
 import com.squareup.picasso.Picasso;
 
@@ -78,7 +80,8 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
     //点击事件，跳转到评论页面
     @OnClick(R.id.tvCreatedAt)
     public void navigateToComments() {
-        // TODO: 2016/12/26 0026 跳转到评论页面
+        //跳转到评论页面
+        CommentsActivity.open(getContext(),newsEntity);
     }
 
     //点击预览图，开始播放

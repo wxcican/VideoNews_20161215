@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 我的收藏列表中的单项布局-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_80"
+    android:paddingLeft="@dimen/lay_4"
+    android:paddingRight="@dimen/lay_4">
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="@dimen/size_100"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/lay_8"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tvNewsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/lay_4"
+        android:layout_toEndOf="@+id/ivPreview"
+        android:ellipsize="end"
+        android:paddingLeft="@dimen/lay_4"
+        android:paddingRight="@dimen/lay_4"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        tools:text="News Title"/>
+
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/lay_16"
+        android:textSize="@dimen/font_12"
+        tools:text="2016-07-17 17:35:29"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/lay_4"
+        android:layout_toEndOf="@+id/ivPreview"
+        android:background="?attr/dividerHorizontal"/>
+
+</RelativeLayout>
