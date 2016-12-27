@@ -99,7 +99,7 @@ public abstract class BaseResourceView<Model, ItemView extends BaseItemView<Mode
     }
 
     //自动刷新
-    public void autoRefresh(){
+    public void autoRefresh() {
         refreshLayout.setRefreshing(true);
         onRefresh();
     }
@@ -177,6 +177,7 @@ public abstract class BaseResourceView<Model, ItemView extends BaseItemView<Mode
     //从服务器查询数据(就是构建一个请求)
     protected abstract Call<QueryResult<Model>> queryData(int limit, int skip);
 
+   
     //每页从服务器获取多少条数据
     protected abstract int getLimit();
 
@@ -216,7 +217,7 @@ public abstract class BaseResourceView<Model, ItemView extends BaseItemView<Mode
             ItemView itemView = (ItemView) holder.itemView;
             //将当前项的数据设置到当前项的视图上
             itemView.bindModel(model);
-    }
+        }
 
         @Override
         public int getItemCount() {

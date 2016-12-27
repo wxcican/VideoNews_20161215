@@ -1,16 +1,13 @@
 package com.fuicuiedu.idedemo.videonews_20161215.ui;
 
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
-import com.fuicuiedu.idedemo.videonews_20161215.TestActivity;
 import com.fuicuiedu.idedemo.videonews_20161215.ui.likes.LikesFragment;
 import com.fuicuiedu.idedemo.videonews_20161215.ui.local.LocalVideoFragment;
 import com.fuicuiedu.idedemo.videonews_20161215.ui.news.NewsFragment;

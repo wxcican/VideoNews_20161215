@@ -5,7 +5,7 @@ package com.fuicuiedu.idedemo.videonews_20161215.bombapi.other;
 //       "查询字段": {
 //          "$inQuery": {
 //                 "where": {
-//                      "objectId": 用户名id
+//                      "objectId": 新闻id
 //                      },
 //                      "className": "表名"
 //                  }
@@ -15,7 +15,7 @@ public class InQuery {
 
     private String field;//查询字段
     private String className;//表名
-    private String objectId;//用户id
+    private String objectId;//新闻id
 
     public InQuery(String field, String className, String objectId) {
         this.field = field;

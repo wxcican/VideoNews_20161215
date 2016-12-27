@@ -19,4 +19,5 @@ public abstract class BaseItemView<Model> extends FrameLayout{
 
     //将实体数据绑定到当前视图上
     protected abstract void bindModel(Model model);
+
 }

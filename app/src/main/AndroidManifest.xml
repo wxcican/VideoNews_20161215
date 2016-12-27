@@ -16,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity" />
         <activity android:name=".ui.news.comments.CommentsActivity"></activity>
     </application>
 

@@ -12,13 +12,19 @@ import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
 import com.fuicuiedu.idedemo.videonews_20161215.UserManager;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.BombClient;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.NewsApi;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.NewsEntity;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.result.CollectResult;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.CommonUtils;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.ToastUtils;
 import com.fuicuiedu.idedemo.videoplayer.part.SimpleVideoPlayer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class    CommentsActivity extends AppCompatActivity {
 
@@ -100,8 +106,11 @@ public class    CommentsActivity extends AppCompatActivity {
         }
         //收藏
         if (item.getItemId() == R.id.menu_item_like){
-            // TODO: 2016/12/26 0026 收藏
-            ToastUtils.showShort("收藏");
+            String newsId = newsEntity.getObjectId();
+            String userId = UserManager.getInstance().getObjectId();
+            NewsApi newsApi_cloud = BombClient.getInstance().getNewsApi_cloud();
+            Call<CollectResult> call = newsApi_cloud.collectNews(newsId,userId);
+            call.enqueue(callback);
         }
         //评论
         if (item.getItemId() == R.id.menu_item_comment){
@@ -110,4 +119,21 @@ public class    CommentsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private Callback<CollectResult> callback = new Callback<CollectResult>() {
+        @Override
+        public void onResponse(Call<CollectResult> call, Response<CollectResult> response) {
+            CollectResult result = response.body();
+            if (result.isSuccess()){
+                ToastUtils.showShort(R.string.like_success);
+            }else{
+                ToastUtils.showShort(R.string.like_failure + result.getError());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<CollectResult> call, Throwable t) {
+            ToastUtils.showShort(t.getMessage());
+        }
+    };
 }
