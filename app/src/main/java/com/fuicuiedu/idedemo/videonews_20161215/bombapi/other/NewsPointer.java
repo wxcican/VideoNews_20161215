@@ -1,4 +1,4 @@
-package com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity;
+package com.fuicuiedu.idedemo.videonews_20161215.bombapi.other;
 
 
 //        "__type":"Pointer",

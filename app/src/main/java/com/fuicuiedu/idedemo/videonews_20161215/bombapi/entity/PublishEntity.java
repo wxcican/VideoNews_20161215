@@ -14,6 +14,9 @@ package com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity;
 //              }
 //     }
 
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.other.AuthorPointer;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.other.NewsPointer;
+
 public class PublishEntity {
     private String content;
     private AuthorPointer author;

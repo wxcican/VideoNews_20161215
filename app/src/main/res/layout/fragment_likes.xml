@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,67 +12,72 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/lay_16"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/lay_16"
             android:drawableLeft="@drawable/ic_account_circle"
-            android:text="@string/tourist"
+            android:drawablePadding="@dimen/lay_8"
             android:gravity="center"
-            android:textSize="@dimen/font_22"
+            android:text="@string/tourist"
             android:textColor="@color/black"
-            android:drawablePadding="@dimen/lay_8"/>
+            android:textSize="@dimen/font_22" />
 
         <Button
             android:id="@+id/btnRegister"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:layout_below="@+id/tvUsername"
             android:layout_alignParentRight="true"
-            style="?attr/borderlessButtonStyle"
-            android:textSize="@dimen/font_14"
-            android:textColor="@color/dim"/>
+            android:layout_below="@+id/tvUsername"
+            android:text="@string/register"
+            android:textColor="@color/dim"
+            android:textSize="@dimen/font_14" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="@dimen/size_1"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/btnRegister"
             android:layout_alignBottom="@+id/btnRegister"
-            android:layout_marginTop="@dimen/lay_12"
+            android:layout_alignTop="@+id/btnRegister"
             android:layout_marginBottom="@dimen/lay_12"
+            android:layout_marginTop="@dimen/lay_12"
             android:layout_toLeftOf="@+id/btnRegister"
-            android:background="?attr/dividerVertical"/>
+            android:background="?attr/dividerVertical" />
 
         <Button
             android:id="@+id/btnLogin"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
             android:layout_below="@+id/tvUsername"
             android:layout_toLeftOf="@+id/divider"
-            style="?attr/borderlessButtonStyle"
-            android:textSize="@dimen/font_14"
-            android:textColor="@color/dim"/>
+            android:text="@string/login"
+            android:textColor="@color/dim"
+            android:textSize="@dimen/font_14" />
 
         <Button
             android:id="@+id/btnLogout"
+            style="?attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/logout"
             android:layout_below="@+id/tvUsername"
             android:layout_toLeftOf="@+id/divider"
-            style="?attr/borderlessButtonStyle"
-            android:textSize="@dimen/font_14"
+            android:text="@string/logout"
             android:textColor="@color/dim"
-            android:visibility="invisible"/>
+            android:textSize="@dimen/font_14"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
-        android:background="@color/pink"/>
+        android:background="@color/pink" />
 
     <!-- 收藏的新闻列表 -->
+    <com.fuicuiedu.idedemo.videonews_20161215.ui.likes.LikesListView
+        android:id="@+id/likesListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/lay_8" />
 
 </LinearLayout>
