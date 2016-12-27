@@ -2,12 +2,16 @@ package com.fuicuiedu.idedemo.videonews_20161215.bombapi;
 
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.CommentsEntity;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.NewsEntity;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.PublishEntity;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.other.InQuery;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.result.CollectResult;
+import com.fuicuiedu.idedemo.videonews_20161215.bombapi.result.CommentsResult;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.result.QueryResult;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 import static android.R.attr.action;
@@ -40,11 +44,14 @@ public interface NewsApi {
     );
 
     //取消收藏新闻
-    //收藏新闻
     @GET("bef74a37a08d3205/changeLike?action=dislike")
     Call<CollectResult> unCollectNews(
             @Query("newsId") String newsId,
             @Query("userId") String userId
     );
+
+    //发表评论
+    @POST("1/classes/Comments")
+    Call<CommentsResult> postComments(@Body PublishEntity publishEntity);
 
 }

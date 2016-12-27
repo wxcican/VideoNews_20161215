@@ -43,6 +43,8 @@ public class    CommentsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)Toolbar toolbar;
     @BindView(R.id.simpleVideoPlayer)SimpleVideoPlayer simpleVideoPlayer;
     @BindView(R.id.commentsListView)CommentsListView commentsListView;
+    private EditCommentFragment editCommentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +116,12 @@ public class    CommentsActivity extends AppCompatActivity {
         }
         //评论
         if (item.getItemId() == R.id.menu_item_comment){
-            // TODO: 2016/12/26 0026 评论
-            ToastUtils.showShort("评论");
+            if (editCommentFragment == null){
+                String newsId = newsEntity.getObjectId();
+                editCommentFragment = EditCommentFragment.getInstance(newsId);
+                editCommentFragment.setListener(listener);
+            }
+            editCommentFragment.show(getSupportFragmentManager(),"Edit Comment");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -134,6 +140,15 @@ public class    CommentsActivity extends AppCompatActivity {
         @Override
         public void onFailure(Call<CollectResult> call, Throwable t) {
             ToastUtils.showShort(t.getMessage());
+        }
+    };
+
+    private EditCommentFragment.OnCommentSuccessListener listener = new EditCommentFragment.OnCommentSuccessListener() {
+        @Override
+        public void onCommentSuccess() {
+            editCommentFragment.dismiss();
+            //刷新，显示最新评论
+            commentsListView.autoRefresh();
         }
     };
 }
