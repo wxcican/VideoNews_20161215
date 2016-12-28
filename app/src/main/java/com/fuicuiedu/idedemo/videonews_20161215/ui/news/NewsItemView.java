@@ -89,6 +89,8 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
     @OnClick(R.id.ivPreview)
     public void startPlayer() {
         if (surface == null) return;
+        //因为viewpager有缓存机制，需要控制视频的停止
+        UserManager.getInstance().setPaly(true);
         String path = newsEntity.getVideoUrl();
         String videoId = newsEntity.getObjectId();
         Log.e("aaa", "点击了预览图");
@@ -133,7 +135,6 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
             tvNewsTitle.setVisibility(View.INVISIBLE);
             ivPreview.setVisibility(View.INVISIBLE);
             ivPlay.setVisibility(View.INVISIBLE);
-            // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
@@ -144,7 +145,6 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
             tvNewsTitle.setVisibility(View.VISIBLE);
             ivPreview.setVisibility(View.VISIBLE);
             ivPlay.setVisibility(View.VISIBLE);
-            // TODO: 2016/12/26 0026 !!!!!!!!!!!!!!!
             progressBar.setVisibility(View.INVISIBLE);
         }
     }

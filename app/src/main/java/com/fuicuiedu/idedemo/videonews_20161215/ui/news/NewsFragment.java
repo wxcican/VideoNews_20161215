@@ -52,7 +52,6 @@ public class NewsFragment extends Fragment{
         super.onResume();
         //初始化MediaPlayer
         MediaPlayerManager.getsInstance(getContext()).onResume();
-        UserManager.getInstance().setPaly(true);
     }
 
     //释放MediaPlayer

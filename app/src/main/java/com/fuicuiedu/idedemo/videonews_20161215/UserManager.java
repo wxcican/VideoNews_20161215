@@ -1,5 +1,7 @@
 package com.fuicuiedu.idedemo.videonews_20161215;
 
+import android.util.Log;
+
 /**
  * 很简单的用户管理类。
  */
@@ -23,6 +25,7 @@ public class UserManager {
     }
 
     public void setPaly(boolean paly) {
+        Log.e("aaa","setPaly: " + paly);
         isPaly = paly;
     }
 
