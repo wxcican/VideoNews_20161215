@@ -33,12 +33,15 @@ public class LocalVideoFragment extends Fragment implements LoaderManager.Loader
 
     @BindView(R.id.gridView)GridView gridView;
     private Unbinder unbinder;
+    private LocalVideoAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //初始化当期页面的Loader（加载器，去loader视频数据）
         getLoaderManager().initLoader(0,null,this);
+        //初始化适配器
+        adapter = new LocalVideoAdapter(getContext());
     }
 
     @Nullable
@@ -51,6 +54,8 @@ public class LocalVideoFragment extends Fragment implements LoaderManager.Loader
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this,view);
+        //设置适配器
+        gridView.setAdapter(adapter);
     }
 
     @Override
@@ -84,20 +89,14 @@ public class LocalVideoFragment extends Fragment implements LoaderManager.Loader
     //数据加载完成
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d(TAG, "onLoadFinished: " + data.getCount());
-
-        if (data.moveToFirst()){
-            do {
-                int index = data.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME);
-                String displayname = data.getString(index);
-                Log.d(TAG, "onLoadFinished: " + displayname);
-            }while (data.moveToNext());
-        }
+        //设置数据
+        adapter.swapCursor(data);
     }
 
     //数据加载重置
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
     }
     // ######################  loderCallBack  end  #####################
 }
