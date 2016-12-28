@@ -48,6 +48,10 @@ public class LocalVideoItem extends FrameLayout {
         return filePath;
     }
 
+    public void setIvPreView(Bitmap bitmap){
+        ivPreview.setImageBitmap(bitmap);
+    }
+
     //设置预览图,可以在后台线程执行
     public void setIvPreView(String filePath, final Bitmap bitmap){
         if (!filePath.equals(this.filePath)) return;

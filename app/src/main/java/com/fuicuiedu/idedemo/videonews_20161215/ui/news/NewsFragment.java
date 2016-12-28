@@ -3,11 +3,13 @@ package com.fuicuiedu.idedemo.videonews_20161215.ui.news;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
+import com.fuicuiedu.idedemo.videonews_20161215.UserManager;
 import com.fuicuiedu.idedemo.videoplayer.list.MediaPlayerManager;
 
 import butterknife.BindView;
@@ -50,6 +52,7 @@ public class NewsFragment extends Fragment{
         super.onResume();
         //初始化MediaPlayer
         MediaPlayerManager.getsInstance(getContext()).onResume();
+        UserManager.getInstance().setPaly(true);
     }
 
     //释放MediaPlayer
@@ -57,7 +60,10 @@ public class NewsFragment extends Fragment{
     public void onPause() {
         super.onPause();
         //释放MediaPlayer
-        MediaPlayerManager.getsInstance(getContext()).onPause();
+        if (UserManager.getInstance().isPaly()){
+            MediaPlayerManager.getsInstance(getContext()).onPause();
+            UserManager.getInstance().setPaly(false);
+        }
     }
 
     //移除View
@@ -74,5 +80,16 @@ public class NewsFragment extends Fragment{
         super.onDestroy();
         //清除所有监听（不再需要Ui交互）
         MediaPlayerManager.getsInstance(getContext()).removeAllListeners();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!UserManager.getInstance().isPaly()) return;
+        //正在播放，并且用户不可见（滑动到第二个fragment）
+        if (!isVisibleToUser){
+            MediaPlayerManager.getsInstance(getContext()).onPause();
+            UserManager.getInstance().setPaly(false);
+        }
     }
 }

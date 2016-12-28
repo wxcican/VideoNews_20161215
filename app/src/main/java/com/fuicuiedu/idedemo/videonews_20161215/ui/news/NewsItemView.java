@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.videonews_20161215.R;
+import com.fuicuiedu.idedemo.videonews_20161215.UserManager;
 import com.fuicuiedu.idedemo.videonews_20161215.bombapi.entity.NewsEntity;
 import com.fuicuiedu.idedemo.videonews_20161215.commons.CommonUtils;
 import com.fuicuiedu.idedemo.videonews_20161215.ui.base.BaseItemView;
@@ -98,6 +99,8 @@ public class NewsItemView extends BaseItemView<NewsEntity> implements TextureVie
     @OnClick(R.id.textureView)
     public void stopPlayer() {
         mediaPlayerManager.stopPlayer();
+        //因为viewpager有缓存机制，需要控制视频的停止
+        UserManager.getInstance().setPaly(false);
     }
 
     // 判断是否操作当前的视频
