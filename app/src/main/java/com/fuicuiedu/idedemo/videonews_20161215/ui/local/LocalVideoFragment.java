@@ -67,6 +67,8 @@ public class LocalVideoFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //关闭加载预览图的线程池
+        adapter.release();
     }
 
     // ######################  loderCallBack  start  #####################
