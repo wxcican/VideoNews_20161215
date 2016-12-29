@@ -18,16 +18,6 @@ public class UserManager {
 
     private String username;
     private String objectId;
-    private boolean isPaly;//因为viewpager有缓存机制，需要控制视频的停止
-
-    public boolean isPaly() {
-        return isPaly;
-    }
-
-    public void setPaly(boolean paly) {
-        Log.e("aaa","setPaly: " + paly);
-        isPaly = paly;
-    }
 
     private UserManager(){}
 
